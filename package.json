@@ -1,0 +1,15 @@
+{
+  "name": "event-sourcing",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "event sourcing",
+  "scripts": {
+    "start": "pnpm dlx tsx index.ts"
+  },
+  "packageManager": "pnpm@10.10.0",
+  "dependencies": {
+    "ulid": "3.0.0",
+    "valibot": "1.1.0"
+  }
+}

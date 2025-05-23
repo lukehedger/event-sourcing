@@ -37,7 +37,15 @@ Event sourcing is useful when:
 
 ## Implementation
 
-TODO: Describe store and processor
+### EventStore
+
+A simple in-memory event store.
+
+Features:
+
+- [ULID](https://github.com/ulid/spec) event IDs
+- [Valibot](https://valibot.dev) event validation
+- Basic support for subscriptions using callbacks
 
 ### TODO
 
@@ -52,5 +60,8 @@ The following properties of LSMs make them very suitable for implementing an eve
 
 Other plans:
 
+- Event schema registry
 - Event versioning/schema evolution
+- Aggregates
+- Optimistic concurrency
 - CQRS and reporting database

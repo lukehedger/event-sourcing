@@ -1,0 +1,36 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      ulid:
+        specifier: 3.0.0
+        version: 3.0.0
+      valibot:
+        specifier: 1.1.0
+        version: 1.1.0
+
+packages:
+
+  ulid@3.0.0:
+    resolution: {integrity: sha512-yvZYdXInnJve6LdlPIuYmURdS2NP41ZoF4QW7SXwbUKYt53+0eDAySO+rGSvM2O/ciuB/G+8N7GQrZ1mCJpuqw==}
+    hasBin: true
+
+  valibot@1.1.0:
+    resolution: {integrity: sha512-Nk8lX30Qhu+9txPYTwM0cFlWLdPFsFr6LblzqIySfbZph9+BFsAHsNvHOymEviUepeIW6KFHzpX8TKhbptBXXw==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
+snapshots:
+
+  ulid@3.0.0: {}
+
+  valibot@1.1.0: {}
