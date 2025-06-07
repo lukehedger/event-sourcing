@@ -46,6 +46,7 @@ Features:
 - [ULID](https://github.com/ulid/spec) event IDs
 - [Valibot](https://valibot.dev) event validation
 - Basic support for subscriptions using callbacks
+- Event schema registry
 
 ### TODO
 
@@ -61,7 +62,5 @@ The following properties of LSMs make them very suitable for implementing an eve
 Other plans:
 
 - Aggregates/partitions
-- Event schema registry
-- Event versioning/schema evolution
 - Optimistic concurrency
 - CQRS and reporting database
