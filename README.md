@@ -60,8 +60,8 @@ The following properties of LSMs make them very suitable for implementing an eve
 
 Other plans:
 
+- Aggregates/partitions
 - Event schema registry
 - Event versioning/schema evolution
-- Aggregates
 - Optimistic concurrency
 - CQRS and reporting database
