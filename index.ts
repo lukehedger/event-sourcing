@@ -1,8 +1,14 @@
-import EventStore from './EventStore';
+import EventStore from "./lib/EventStore";
 
 const eventStore = new EventStore();
 
-eventStore.append({
-  data: { test: true },
-  type: 'Test',
+eventStore.subscribe((event) => {
+	console.log("new", event);
 });
+
+eventStore.append(
+	eventStore.buildEvent({
+		data: { test: true },
+		type: "Test",
+	}),
+);
