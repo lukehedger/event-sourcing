@@ -88,16 +88,18 @@ export default class EventStore {
 	/**
 	 * Subscribe to new events
 	 *
-	 * @param {Function} callback - Function to call when new events are appended
+	 * @param callback - Function to call when new events are appended
 	 *
-	 * @returns {Function} Unsubscribe function
+	 * @returns Unsubscribe function
 	 */
-	subscribe(callback: EventSubscriber) {
+	subscribe(callback: EventSubscriber): { unsubscribe: () => void } {
 		this.subscribers.push(callback);
 
 		// Return unsubscribe function
-		return () => {
-			this.subscribers = this.subscribers.filter((sub) => sub !== callback);
+		return {
+			unsubscribe: () => {
+				this.subscribers = this.subscribers.filter((sub) => sub !== callback);
+			},
 		};
 	}
 

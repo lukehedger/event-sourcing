@@ -7,7 +7,7 @@ import {
 
 const eventStore = new EventStore();
 
-eventStore.subscribe((event) => {
+const subscription = eventStore.subscribe((event) => {
 	console.log(event.type);
 });
 
@@ -16,6 +16,8 @@ eventStore.append({
 	data: { test: true } as TestEvent,
 	type: EventTypes.Test,
 });
+
+subscription.unsubscribe();
 
 eventStore.append({
 	data: { amount: 100 } as CreditEvent,
