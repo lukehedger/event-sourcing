@@ -58,6 +58,20 @@ Features:
 - Basic support for subscriptions using callbacks
 - Event schema registry
 
+### TypeScript
+
+This application is written in TypeScript. There are a few points to note here.
+
+#### Performance
+
+Performance is a critical aspect of any event sourcing application. This implementation uses Bun as the JavaScript runtime, which is known for its high performance and low memory footprint.
+
+#### Refactoring
+
+You should be able to refactor the event sourcing application without fear of breaking existing functionality. This is supported by adhering to the following principles:
+
+- Maintain a central, single source of truth of data models and type definitions. Derive all other types (e.g. partial types) from the central source. This means types only need to be changed once (e.g. when adding new fields to an event).
+
 ### TODO
 
 This project will be expanded to replace the in-memory event store with SlateDB, "an embedded storage engine built as a log-structured merge-tree" that writes all data to object storage.
