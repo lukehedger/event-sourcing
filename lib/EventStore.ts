@@ -1,10 +1,10 @@
-import { decodeTime, ulid } from "ulid";
+import { randomUUIDv7 } from "bun";
 import * as v from "valibot";
 import { EventTypes, SchemaRegistry } from "./SchemaRegistry";
 
 const EventSchema = v.object({
 	data: v.union(SchemaRegistry),
-	id: v.pipe(v.string(), v.ulid()),
+	id: v.pipe(v.string(), v.uuid()),
 	timestamp: v.pipe(v.string(), v.isoTimestamp()),
 	type: v.pipe(v.string(), v.enum(EventTypes)),
 });
@@ -14,6 +14,24 @@ type Event = v.InferOutput<typeof EventSchema>;
 type BaseEvent = Pick<Event, "data" | "type">;
 
 type EventSubscriber = (event: Event) => void;
+
+/**
+ * Extract timestamp from UUID v7
+ *
+ * @param {string} uuidv7 - The UUID v7 string
+ *
+ * @returns {number} Timestamp in milliseconds since Unix epoch
+ */
+function decodeTime(uuidv7: string): number {
+	// Remove hyphens and convert to lowercase
+	const hex = uuidv7.replace(/-/g, "").toLowerCase();
+
+	// Extract the first 48 bits (12 hex characters) which contain the timestamp
+	const timestampHex = hex.substring(0, 12);
+
+	// Convert hex to number (timestamp in milliseconds)
+	return Number.parseInt(timestampHex, 16);
+}
 
 /**
  * In-memory event store, with support for subscriptions
@@ -55,7 +73,7 @@ export default class EventStore {
 	/**
 	 * Build a valid event to append to the store.
 	 *
-	 * Merges event data with generated event metadata, including a ULID-based event ID and timestamp.
+	 * Merges event data with generated event metadata, including a UUID v7-based event ID and timestamp.
 	 *
 	 * @private
 	 *
@@ -66,7 +84,7 @@ export default class EventStore {
 	 * @returns {Object} The built event
 	 */
 	private buildEvent(baseEvent: BaseEvent): Event {
-		const eventId = ulid();
+		const eventId = randomUUIDv7();
 
 		return {
 			data: baseEvent.data,

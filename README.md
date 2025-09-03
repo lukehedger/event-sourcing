@@ -37,13 +37,23 @@ Event sourcing is useful when:
 
 ## Implementation
 
+### Run
+
+To run the event sourcing application, execute the following command:
+
+```bash
+bun run start
+```
+
+> [Install Bun](https://bun.com/docs/installation) if you don't already have it
+
 ### EventStore
 
 A simple in-memory event store.
 
 Features:
 
-- [ULID](https://github.com/ulid/spec) event IDs
+- [UUID v7](https://bun.com/docs/api/utils#bun-randomuuidv7) event IDs
 - [Valibot](https://valibot.dev) event validation
 - Basic support for subscriptions using callbacks
 - Event schema registry

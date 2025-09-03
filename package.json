@@ -5,14 +5,13 @@
 	"type": "module",
 	"description": "event sourcing",
 	"scripts": {
-		"start": "pnpm dlx tsx index.ts"
+		"start": "bun index.ts"
 	},
-	"packageManager": "pnpm@10.10.0",
 	"dependencies": {
-		"ulid": "3.0.0",
 		"valibot": "1.1.0"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4"
+		"@biomejs/biome": "2.2.2",
+		"@types/bun": "1.2.21"
 	}
 }
