@@ -1,10 +1,6 @@
 import * as v from "valibot";
 
-export enum EventTypes {
-	Credit = "Credit",
-	Debit = "Debit",
-	Test = "Test",
-}
+// event definitions
 
 export const CreditEventSchema = v.object({
 	amount: v.number(),
@@ -24,4 +20,22 @@ export const TestEventSchema = v.object({
 
 export type TestEvent = v.InferOutput<typeof TestEventSchema>;
 
-export const SchemaRegistry = [CreditEventSchema, TestEventSchema];
+// general definitions
+
+export namespace EventBody {
+	export type Credit = CreditEvent;
+	export type Debit = DebitEvent;
+	export type Test = TestEvent;
+}
+
+export enum EventTypes {
+	Credit = "Credit",
+	Debit = "Debit",
+	Test = "Test",
+}
+
+export const SchemaRegistry = [
+	CreditEventSchema,
+	DebitEventSchema,
+	TestEventSchema,
+];

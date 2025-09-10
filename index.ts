@@ -1,19 +1,18 @@
 import EventStore from "./lib/EventStore";
 import {
 	type CreditEvent,
+	type EventBody,
 	EventTypes,
-	type TestEvent,
 } from "./lib/SchemaRegistry";
 
 const eventStore = new EventStore();
 
 const subscription = eventStore.subscribe((event) => {
-	console.log(event.type);
+	console.log(`event received: ${event.type}`);
 });
 
-// TODO: Find better way to type this
 eventStore.append({
-	data: { test: true } as TestEvent,
+	data: { test: true } as EventBody.Test,
 	type: EventTypes.Test,
 });
 

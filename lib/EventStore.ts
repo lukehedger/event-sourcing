@@ -49,7 +49,7 @@ export default class EventStore {
 	 * Append an event to the store
 	 *
 	 * @param {Object} event - The event to store
-	 * @param {Object} event.data - The event payload
+	 * @param {Object} event.data - The event body
 	 * @param {string} event.type - The type of the event
 	 */
 	append(baseEvent: BaseEvent) {
@@ -79,7 +79,7 @@ export default class EventStore {
 	 *
 	 * @param {Object} baseEvent - The data to use for the base of the event
 	 * @param {string} baseEvent.type - The type of the event
-	 * @param {Object} baseEvent.data - The event payload
+	 * @param {Object} baseEvent.data - The event body
 	 *
 	 * @returns {Object} The built event
 	 */
@@ -125,7 +125,7 @@ export default class EventStore {
 	 * Validate an event against the schema registry
 	 *
 	 * @param {Object} event - The event to validate
-	 * @param {Object} event.data - The event payload
+	 * @param {Object} event.data - The event body
 	 * @param {string} event.id - The event id
 	 * @param {string} event.timestamp - The timestamp of the event
 	 * @param {string} event.type - The type of the event
