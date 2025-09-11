@@ -11,9 +11,9 @@ const EventSchema = v.object({
 
 type Event = v.InferOutput<typeof EventSchema>;
 
-type BaseEvent = Pick<Event, "data" | "type">;
+export type BaseEvent = Pick<Event, "data" | "type">;
 
-type EventSubscriber = (event: Event) => void;
+export type EventSubscriber = (event: Event) => void;
 
 /**
  * Extract timestamp from UUID v7
@@ -46,13 +46,50 @@ export default class EventStore {
 	}
 
 	/**
+	 * Build a valid event to append to the store.
+	 *
+	 * Merges event data with generated event metadata, including a UUID v7-based event ID and timestamp.
+	 *
+	 * @private
+	 *
+	 * @param {Object} baseEvent - The data to use for the base of the event
+	 * @param {string} baseEvent.type - The type of the event
+	 * @param {Object} baseEvent.data - The event body
+	 *
+	 * @returns {Object} The built event
+	 */
+	private buildEvent(baseEvent: BaseEvent): Event {
+		const eventId = this.generateEventId();
+
+		return {
+			data: baseEvent.data,
+			id: eventId,
+			timestamp: new Date(decodeTime(eventId)).toISOString(),
+			type: baseEvent.type,
+		};
+	}
+
+	/**
+	 * Validate an event against the schema registry
+	 *
+	 * @param {Object} event - The event to validate
+	 * @param {Object} event.data - The event body
+	 * @param {string} event.id - The event id
+	 * @param {string} event.timestamp - The timestamp of the event
+	 * @param {string} event.type - The type of the event
+	 */
+	private validateEvent(event: Event) {
+		v.parse(EventSchema, event);
+	}
+
+	/**
 	 * Append an event to the store
 	 *
 	 * @param {Object} event - The event to store
 	 * @param {Object} event.data - The event body
 	 * @param {string} event.type - The type of the event
 	 */
-	append(baseEvent: BaseEvent) {
+	public append(baseEvent: BaseEvent) {
 		// Combine event data with generated event metadata
 		const event = this.buildEvent(baseEvent);
 
@@ -71,27 +108,12 @@ export default class EventStore {
 	}
 
 	/**
-	 * Build a valid event to append to the store.
+	 * Generate a UUID v7-based identifier for use as an event ID
 	 *
-	 * Merges event data with generated event metadata, including a UUID v7-based event ID and timestamp.
-	 *
-	 * @private
-	 *
-	 * @param {Object} baseEvent - The data to use for the base of the event
-	 * @param {string} baseEvent.type - The type of the event
-	 * @param {Object} baseEvent.data - The event body
-	 *
-	 * @returns {Object} The built event
+	 * @returns {string} UUID v7 event ID
 	 */
-	private buildEvent(baseEvent: BaseEvent): Event {
-		const eventId = randomUUIDv7();
-
-		return {
-			data: baseEvent.data,
-			id: eventId,
-			timestamp: new Date(decodeTime(eventId)).toISOString(),
-			type: baseEvent.type,
-		};
+	public generateEventId(): string {
+		return randomUUIDv7();
 	}
 
 	/**
@@ -99,7 +121,7 @@ export default class EventStore {
 	 *
 	 * @returns {Array} All events
 	 */
-	getAllEvents(): Array<Event> {
+	public getAllEvents(): Array<Event> {
 		return [...this.events];
 	}
 
@@ -110,7 +132,7 @@ export default class EventStore {
 	 *
 	 * @returns Unsubscribe function
 	 */
-	subscribe(callback: EventSubscriber): { unsubscribe: () => void } {
+	public subscribe(callback: EventSubscriber): { unsubscribe: () => void } {
 		this.subscribers.push(callback);
 
 		// Return unsubscribe function
@@ -119,18 +141,5 @@ export default class EventStore {
 				this.subscribers = this.subscribers.filter((sub) => sub !== callback);
 			},
 		};
-	}
-
-	/**
-	 * Validate an event against the schema registry
-	 *
-	 * @param {Object} event - The event to validate
-	 * @param {Object} event.data - The event body
-	 * @param {string} event.id - The event id
-	 * @param {string} event.timestamp - The timestamp of the event
-	 * @param {string} event.type - The type of the event
-	 */
-	private validateEvent(event: Event) {
-		v.parse(EventSchema, event);
 	}
 }

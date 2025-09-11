@@ -37,15 +37,19 @@ Event sourcing is useful when:
 
 ## Implementation
 
-### Run
+### Test
 
-To run the event sourcing application, execute the following command:
+To run the event sourcing application tests, execute the following command:
 
 ```bash
-bun run start
+bun test
 ```
 
 > [Install Bun](https://bun.com/docs/installation) if you don't already have it
+
+### EventProcessor
+
+_Coming soon!_
 
 ### EventStore
 
@@ -56,7 +60,10 @@ Features:
 - [UUID v7](https://bun.com/docs/api/utils#bun-randomuuidv7) event IDs
 - [Valibot](https://valibot.dev) event validation
 - Basic support for subscriptions using callbacks
-- Event schema registry
+
+### SchemaRegistry
+
+Event schema registry and type definitions, powered by [Valibot](https://valibot.dev).
 
 ### TypeScript
 
